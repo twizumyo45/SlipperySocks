@@ -17,6 +17,7 @@ var PlayScene = cc.Scene.extend({
         //add three layer in the right order
         this.gameLayer.addChild(new BackgroundLayer(this.space), 0, TagOfLayer.Background);
         this.gameLayer.addChild(new AnimationLayer(this.space), 0, TagOfLayer.Animation);
+        this.gameLayer.addChild(new StatusLayer(this.space), 0, TagOfLayer.Status);
         this.addChild(this.gameLayer);
 
         //init the removal queue
@@ -54,6 +55,7 @@ var PlayScene = cc.Scene.extend({
         for(var i = 0; i < this.shapesToRemove.length; i++) {
             var shape = this.shapesToRemove[i];
             this.gameLayer.getChildByTag(TagOfLayer.Animation).removeCandy();
+            this.gameLayer.getChildByTag(TagOfLayer.Status).incrementCandies();
         }
         this.shapesToRemove = [];
 
