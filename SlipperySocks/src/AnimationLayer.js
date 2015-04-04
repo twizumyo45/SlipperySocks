@@ -3,7 +3,9 @@ var AnimationLayer = cc.Layer.extend({
         this._super();
         this.space = space;
         this.init();
+        var kid = this.getChildByName("thekid");
 
+        
 
         if (cc.sys.capabilities.hasOwnProperty('mouse'))
         {
@@ -17,8 +19,8 @@ var AnimationLayer = cc.Layer.extend({
                     {
                         cc.log("mouse pressed at:" + event.getLocationX());
 
-                        var actionTo = new cc.MoveTo(4, cc.p(event.getLocationX(), event.getLocationY()));
-                        this.getChildByName("thekid").runAction(new cc.Sequence(actionTo));
+                        var actionTo = new cc.MoveTo(4, cc.p( event.getLocationX(),  event.getLocationY()));
+                        kid.runAction(new cc.Sequence(actionTo));
 
                     }
                 }, 
@@ -29,12 +31,12 @@ var AnimationLayer = cc.Layer.extend({
                     {
                         cc.log("released at:" + event.getLocationX());
                     }
-                }, 
-
+                }
+/*
                 onMouseMove: function(event)
                 { 
                     cc.log("moved to:" + event.getLocationX());
-                }
+                }*/
 
 
 
