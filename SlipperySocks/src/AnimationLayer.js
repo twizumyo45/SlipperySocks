@@ -9,22 +9,46 @@ var AnimationLayer = cc.Layer.extend({
 
     this.initKidAnimation(kid);
 
-    if (cc.sys.capabilities.hasOwnProperty('mouse')) {
+
+
+    if( 'touches' in cc.sys.capabilities ) {
+        this.setTouchEnabled(true);
+        cc.eventManager.addListener({
+        event: cc.EventListener.TOUCH,
+
+        onTouchBegan: function(event) {
+            this.onTouchMoved = this.onTouchMovedClicked;
+            ACCELERATION_POINT = cc.p(event.getLocationX(), event.getLocationY());
+            kid.runAction(kid.runningAction);
+        },
+
+        onTouchEnded: function(event) {
+            //todo: just turn off this listener
+            this.onTouchMoved = function() {};
+
+            ACCELERATION_POINT = null;
+
+            // turn off animation
+            kid.stopAllActions();
+        },
+
+        onTouchMovedClicked: function(event) {
+            ACCELERATION_POINT = cc.p(event.getLocationX(), event.getLocationY());
+        }
+      }, this);
+    }
+    else if (cc.sys.capabilities.hasOwnProperty('mouse')) {
       cc.eventManager.addListener({
         event: cc.EventListener.MOUSE,
 
         onMouseDown: function(event) {
-          if (event.getButton() == cc.EventMouse.BUTTON_LEFT) {
-            cc.log("mouse pressed at:" + event.getLocationX() + "," + event.getLocationY());
             this.onMouseMove = this.onMouseMoveClicked;
             ACCELERATION_POINT = cc.p(event.getLocationX(), event.getLocationY());
             kid.runAction(kid.runningAction);
-          }
         },
 
         onMouseUp: function(event) {
           if (event.getButton() == cc.EventMouse.BUTTON_LEFT) {
-            cc.log("released at:" + event.getLocationX());
             //todo: just turn off this listener
             this.onMouseMove = function() {};
 
