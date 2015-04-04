@@ -9,7 +9,6 @@ var AnimationLayer = cc.Layer.extend({
     this.kid = this.getChildByName("thekid");
 
 
-
     if (cc.sys.capabilities.hasOwnProperty('mouse')) {
       cc.eventManager.addListener({
         event: cc.EventListener.MOUSE,
@@ -19,7 +18,6 @@ var AnimationLayer = cc.Layer.extend({
             cc.log("mouse pressed at:" + event.getLocationX());
             // this.onMouseMove = this.onMouseMoveClicked;
             ACCELERATION_POINT = cc.p(event.getLocationX(), event.getLocationY());
-            console.log(this.kid);
           }
         },
 
@@ -28,6 +26,8 @@ var AnimationLayer = cc.Layer.extend({
             cc.log("released at:" + event.getLocationX());
             //todo: just turn off this listener
             this.onMouseMove = function() {};
+
+            ACCELERATION_POINT = null;
           }
         },
 
@@ -51,6 +51,10 @@ var AnimationLayer = cc.Layer.extend({
     var spriteCharacter = cc.PhysicsSprite.createWithSpriteFrameName(res.stationary_kid_png);
     var contentSize = spriteCharacter.getContentSize();
 
+    // set anchor point
+    // spriteCharacter.anchorX = 0.5;
+    // spriteCharacter.anchorY = 0.5;
+
     // init physics body
     spriteCharacter.body = new cp.Body(1, cp.momentForBox(1, contentSize.width, contentSize.height));
     // set position
@@ -67,9 +71,9 @@ var AnimationLayer = cc.Layer.extend({
 
     spriteCharacter.setName("thekid");
 
-
     //create first candy 
     var spriteCandy = this.createCandy();
+
 
     this.addChild(spriteCharacter);
     this.addChild(spriteCandy);
@@ -80,14 +84,15 @@ var AnimationLayer = cc.Layer.extend({
   },
 
   accelerate: function(point) {
-    // var a = point.x - this.kid.body.
+    if (!ACCELERATION_POINT) {
+        return;
+    }
 
+    var kid_vec = cp.v(this.kid.body.p.x, this.kid.body.p.y);
+    var click_vec = cp.v(point.x, point.y);
+    var accel_vec = cp.v.normalize(cp.v.sub(click_vec, kid_vec));
+    this.kid.body.applyImpulse(accel_vec, cp.v(0, 0));
 
-    var actionTo = new cc.MoveTo(4, point);
-    // this.kid.runAction(new cc.Sequence(actionTo));
-
-    // this.kid.body.applyImpulse(mouselocation - kid position, this.kid.)
-    this.kid.body.vx += 0.1
   },
 
   createCandy: function() {
@@ -118,5 +123,6 @@ var AnimationLayer = cc.Layer.extend({
     var candy = this.getChildByName("candy");
     this.removeChild(candy);
   },
+
 
 });

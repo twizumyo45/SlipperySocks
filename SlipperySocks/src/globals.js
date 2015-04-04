@@ -1,7 +1,7 @@
 var KID_START_X = 80;
 var KID_START_Y = 95;
 
-var ACCELERATION_POINT = cc.p(0, 0);
+var ACCELERATION_POINT = null;
 
 if(typeof TagOfLayer == "undefined") {
     var TagOfLayer = {};
