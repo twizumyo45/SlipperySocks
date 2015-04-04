@@ -32,7 +32,7 @@ var PlayScene = cc.Scene.extend({
         // turn off gravity
         this.space.gravity = cp.v(0, 0);
 
-        //add collision handler for kid to candy 
+        //add collision handler for kid to candy/wall
         this.space.addCollisionHandler(SpriteTag.thekid, SpriteTag.candy, this.collisionCandy.bind(this), null, null, null);
     },
     collisionCandy:function (arbiter, space) {
@@ -45,6 +45,8 @@ var PlayScene = cc.Scene.extend({
         // chipmunk step
         this.space.step(dt);
 
+        //check if out of boundries
+        this.gameLayer.getChildByTag(TagOfLayer.Animation).checkBoundaries();
 
         //remove everything in the queue
         for(var i = 0; i < this.shapesToRemove.length; i++) {
