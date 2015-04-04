@@ -16,4 +16,5 @@ if(typeof SpriteTag == "undefined") {
     var SpriteTag = {};
     SpriteTag.thekid = 0;
     SpriteTag.candy = 1;
+    SpriteTag.wall = 2;
 };
