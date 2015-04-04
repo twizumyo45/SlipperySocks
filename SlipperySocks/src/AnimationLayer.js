@@ -22,9 +22,7 @@ var AnimationLayer = cc.Layer.extend({
                     if (event.getButton() == cc.EventMouse.BUTTON_LEFT)
                     {
                         cc.log("mouse pressed at:" + event.getLocationX());
-
-                        var actionTo = new cc.MoveTo(4, cc.p( event.getLocationX(),  event.getLocationY()));
-                        kid.runAction(new cc.Sequence(actionTo));
+                        this.onMouseMove = this.onMouseMoveClicked;
 
                     }
                 }, 
@@ -34,13 +32,17 @@ var AnimationLayer = cc.Layer.extend({
                     if (event.getButton() == cc.EventMouse.BUTTON_LEFT)
                     {
                         cc.log("released at:" + event.getLocationX());
+                        //todo: just turn off this listener
+                        this.onMouseMove = function(){};
                     }
-                }
-/*
-                onMouseMove: function(event)
+                },
+
+                onMouseMoveClicked: function(event)
                 { 
                     cc.log("moved to:" + event.getLocationX());
-                }*/
+                    var actionTo = new cc.MoveTo(4, cc.p( event.getLocationX(),  event.getLocationY()));
+                    kid.runAction(new cc.Sequence(actionTo));
+                }
 
 
 
