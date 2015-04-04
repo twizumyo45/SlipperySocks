@@ -1,4 +1,8 @@
 {
     "has_native": true, 
-    "project_type": "js"
+    "project_type": "js",
+	"web_cfg": {
+        "project_path": "./"
+    }
 }
+
