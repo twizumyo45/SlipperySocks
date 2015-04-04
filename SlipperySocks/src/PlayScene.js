@@ -31,6 +31,8 @@ var PlayScene = cc.Scene.extend({
         this.space = new cp.Space();
         // turn off gravity
         this.space.gravity = cp.v(0, 0);
+        // set damping
+        this.space.damping = DAMPING_FACTOR;
 
         //add collision handler for kid to candy 
         this.space.addCollisionHandler(SpriteTag.thekid, SpriteTag.candy, this.collisionCandy.bind(this), null, null, null);

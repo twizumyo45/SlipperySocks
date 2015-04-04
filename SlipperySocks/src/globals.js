@@ -2,6 +2,8 @@ var KID_START_X = 80;
 var KID_START_Y = 95;
 
 var ACCELERATION_POINT = null;
+var ACCELERATION_FACTOR = 2;
+var DAMPING_FACTOR = 0.8;
 
 if(typeof TagOfLayer == "undefined") {
     var TagOfLayer = {};

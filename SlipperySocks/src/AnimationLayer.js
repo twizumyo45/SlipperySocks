@@ -7,7 +7,9 @@ var AnimationLayer = cc.Layer.extend({
     this.space = space;
     this.init();
     this.kid = this.getChildByName("thekid");
+    var kid = this.kid;
 
+    this.initKidAnimation();
 
     if (cc.sys.capabilities.hasOwnProperty('mouse')) {
       cc.eventManager.addListener({
@@ -18,6 +20,7 @@ var AnimationLayer = cc.Layer.extend({
             cc.log("mouse pressed at:" + event.getLocationX());
             this.onMouseMove = this.onMouseMoveClicked;
             ACCELERATION_POINT = cc.p(event.getLocationX(), event.getLocationY());
+            // kid.runAction(this.runningAction);
           }
         },
 
@@ -87,7 +90,7 @@ var AnimationLayer = cc.Layer.extend({
 
     var kid_vec = cp.v(this.kid.body.p.x, this.kid.body.p.y);
     var click_vec = cp.v(point.x, point.y);
-    var accel_vec = cp.v.normalize(cp.v.sub(click_vec, kid_vec));
+    var accel_vec = cp.v.mult(cp.v.normalize(cp.v.sub(click_vec, kid_vec)), ACCELERATION_FACTOR);
     this.kid.body.applyImpulse(accel_vec, cp.v(0, 0));
 
     // angle in degrees
@@ -129,6 +132,26 @@ var AnimationLayer = cc.Layer.extend({
     var newCandy = this.createCandy();
     this.addChild(newCandy);
   },
+
+  initKidAnimation: function() {
+
+    // create sprite sheet
+    cc.spriteFrameCache.addSpriteFrames(res.running_kid_plist);
+    this.spriteSheet = new cc.SpriteBatchNode(res.running_kid_png);
+    this.addChild(this.spriteSheet);
+
+    // init runningAction
+    var animFrames = [
+        cc.spriteFrameCache.getSpriteFrame('sprite_1.png'),
+        cc.spriteFrameCache.getSpriteFrame('sprite_2.png')
+    ];
+
+    var animation = new cc.Animation(animFrames, 0.08);
+    this.runningAction = new cc.RepeatForever(new cc.Animate(animation));
+    this.kid.runAction(this.runningAction);
+    this.spriteSheet.addChild(this.kid);
+
+  }
 
 
 });
