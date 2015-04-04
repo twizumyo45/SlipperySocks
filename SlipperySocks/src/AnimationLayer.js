@@ -1,5 +1,7 @@
-KID_START_X = 80;
-KID_START_Y = 95;
+var KID_START_X = 80;
+var KID_START_Y = 95;
+
+var ACCELERATION_POINT = cc.p(0, 0);
 
 var AnimationLayer = cc.Layer.extend({
 
@@ -7,7 +9,7 @@ var AnimationLayer = cc.Layer.extend({
     this._super();
     this.space = space;
     this.init();
-    var kid = this.getChildByName("thekid");
+    this.kid = this.getChildByName("thekid");
 
 
 
@@ -18,8 +20,9 @@ var AnimationLayer = cc.Layer.extend({
         onMouseDown: function(event) {
           if (event.getButton() == cc.EventMouse.BUTTON_LEFT) {
             cc.log("mouse pressed at:" + event.getLocationX());
-            this.onMouseMove = this.onMouseMoveClicked;
-
+            // this.onMouseMove = this.onMouseMoveClicked;
+            ACCELERATION_POINT = cc.p(event.getLocationX(), event.getLocationY());
+            console.log(this.kid);
           }
         },
 
@@ -33,8 +36,7 @@ var AnimationLayer = cc.Layer.extend({
 
         onMouseMoveClicked: function(event) {
           cc.log("moved to:" + event.getLocationX());
-          var actionTo = new cc.MoveTo(4, cc.p(event.getLocationX(), event.getLocationY()));
-          kid.runAction(new cc.Sequence(actionTo));
+
         }
 
 
@@ -42,6 +44,7 @@ var AnimationLayer = cc.Layer.extend({
       }, this);
     }
 
+    this.scheduleUpdate();
     return true;
   },
   init: function() {
@@ -68,5 +71,20 @@ var AnimationLayer = cc.Layer.extend({
 
     this.addChild(spriteCharacter);
   },
+
+  update: function(dt) {
+    this.accelerate(ACCELERATION_POINT);
+  },
+
+  accelerate: function(point) {
+    // var a = point.x - this.kid.body.
+
+
+    var actionTo = new cc.MoveTo(4, point);
+    // this.kid.runAction(new cc.Sequence(actionTo));
+
+    // this.kid.body.applyImpulse(mouselocation - kid position, this.kid.)
+    this.kid.body.vx += 0.1
+  }
 
 });
