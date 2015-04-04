@@ -134,19 +134,16 @@ var AnimationLayer = cc.Layer.extend({
     this.addChild(newCandy);
   },
   checkBoundaries:function () {
-
-    cc.log("checked");
-
+    
     var winsize = cc.director.getWinSize();
 
     if (this.kid.body.p.x < 10 || this.kid.body.p.x > winsize.width - 10 || 
             this.kid.body.p.y < 10 || this.kid.body.p.y > winsize.height - 10)
     {
-        cc.log("atboundry");
         this.kid.body.vx = 0;
         this.kid.body.vy = 0;
     }
-  }
+  },
 
   initKidAnimation: function() {
 
