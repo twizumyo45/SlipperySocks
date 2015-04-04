@@ -2,7 +2,6 @@ var PlayScene = cc.Scene.extend({
     onEnter:function () {
         this._super();
         this.initPhysics();
-        console.log(this.space);
 
         //add three layer in the right order
         this.addChild(new BackgroundLayer());
