@@ -129,8 +129,10 @@ var AnimationLayer = cc.Layer.extend({
     return spriteCandy;
   },
   removeCandy:function () {
+
     var candy = this.getChildByName("candy");
-    this.removeChild(candy);
+    this.space.removeShape(candy.shape);
+    candy.removeFromParent();
 
     var newCandy = this.createCandy();
     this.addChild(newCandy);
