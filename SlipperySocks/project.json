@@ -16,6 +16,7 @@
         "src/PlayScene.js",
         "src/BackgroundLayer.js",
         "src/AnimationLayer.js",
-        "src/globals.js"
+        "src/globals.js",
+        "src/StatusLayer.js"
     ]
 }

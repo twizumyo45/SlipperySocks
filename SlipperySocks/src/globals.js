@@ -9,6 +9,7 @@ if(typeof TagOfLayer == "undefined") {
     var TagOfLayer = {};
     TagOfLayer.Background = 0;
     TagOfLayer.Animation = 1;
+    TagOfLayer.Status = 2;
 };
 
 // collision type for chipmunk
