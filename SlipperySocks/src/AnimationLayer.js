@@ -5,6 +5,7 @@ var AnimationLayer = cc.Layer.extend({
     this._super();
     this.space = space;
     this.init();
+    ACCELERATION_POINT=null;
     this.kid = this.getChildByName("thekid");
     var kid = this.kid;
 

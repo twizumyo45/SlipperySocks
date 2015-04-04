@@ -18,7 +18,7 @@ var StatusLayer = cc.Layer.extend({
         this.labelCandies.setPosition(cc.p(70, winsize.height - 20));
         this.addChild(this.labelCandies);
 
-        this.labelLife = new cc.LabelTTF("Life:1000", "Helvetica", 20);
+        this.labelLife = new cc.LabelTTF("Life:" +  Math.floor(this.life/10), "Helvetica", 20);
         this.labelLife.setColor(cc.color(0,0,0));//black color
         this.labelLife.setPosition(cc.p(70, winsize.height - 50));
         this.addChild(this.labelLife);
@@ -35,5 +35,7 @@ var StatusLayer = cc.Layer.extend({
     decrementLife:function(){
         this.life -= this.lifeLoss;
         this.labelLife.setString("Life:" + Math.floor(this.life/10));
+
+        return this.life;
     }
 });
