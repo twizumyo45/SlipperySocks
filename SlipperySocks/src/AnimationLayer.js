@@ -103,8 +103,11 @@ var AnimationLayer = cc.Layer.extend({
 
     // init physics body
     spriteCandy.body = new cp.Body(1, cp.momentForBox(1, contentSize.width, contentSize.height));
-    // set position
-    spriteCandy.body.p = cc.p(KID_START_X + 80, KID_START_X + contentSize.height / 2);
+    // set position (randomized)
+    var winsize = cc.director.getWinSize();
+    var xPos = Math.floor((Math.random() * winsize.width));
+    var yPos = Math.floor((Math.random() * winsize.height));
+    spriteCandy.body.p = cc.p(xPos, yPos);
     // add body to space
     this.space.addBody(spriteCandy.body);
     // create hitbox
@@ -122,6 +125,9 @@ var AnimationLayer = cc.Layer.extend({
   removeCandy:function () {
     var candy = this.getChildByName("candy");
     this.removeChild(candy);
+
+    var newCandy = this.createCandy();
+    this.addChild(newCandy);
   },
 
 
