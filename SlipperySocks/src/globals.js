@@ -5,6 +5,8 @@ var ACCELERATION_POINT = null;
 var ACCELERATION_FACTOR = 2;
 var DAMPING_FACTOR = 0.8;
 
+var MAX_LIFE = 1100;
+
 if(typeof TagOfLayer == "undefined") {
     var TagOfLayer = {};
     TagOfLayer.Background = 0;

@@ -1,6 +1,6 @@
 var PlayScene = cc.Scene.extend({
 	
-	shapesToRemove :[],
+	gotCandy:false,
 	gameLayer:null,
 
     onEnter:function () {
@@ -20,9 +20,6 @@ var PlayScene = cc.Scene.extend({
         this.gameLayer.addChild(new StatusLayer(this.space), 0, TagOfLayer.Status);
         this.addChild(this.gameLayer);
 
-        //init the removal queue
-        this.shapesToRemove = [];
-
         //run updates
         this.scheduleUpdate();
     },
@@ -39,10 +36,7 @@ var PlayScene = cc.Scene.extend({
         this.space.addCollisionHandler(SpriteTag.thekid, SpriteTag.candy, this.collisionCandy.bind(this), null, null, null);
     },
     collisionCandy:function (arbiter, space) {
-        var shapes = arbiter.getShapes();
-        // shapes[0] is the kid
-        // shapes [1] is the candy 
-        this.shapesToRemove.push(shapes[1]);
+        this.gotCandy = true;
     },
     update:function (dt) {
         // chipmunk step
@@ -51,13 +45,16 @@ var PlayScene = cc.Scene.extend({
         //check if out of boundries
         this.gameLayer.getChildByTag(TagOfLayer.Animation).checkBoundaries();
 
-        //remove everything in the queue
-        for(var i = 0; i < this.shapesToRemove.length; i++) {
-            var shape = this.shapesToRemove[i];
+        //decrease life
+        this.gameLayer.getChildByTag(TagOfLayer.Status).decrementLife();
+
+        //deal with candy collision
+        if (this.gotCandy == true)
+        {
             this.gameLayer.getChildByTag(TagOfLayer.Animation).removeCandy();
             this.gameLayer.getChildByTag(TagOfLayer.Status).incrementCandies();
+            this.gotCandy = false; 
         }
-        this.shapesToRemove = [];
 
     }
 });

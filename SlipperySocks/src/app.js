@@ -1,3 +1,7 @@
+//TODO: delete this later
+var ps;
+
+
 var MenuLayer = cc.Layer.extend({
     ctor : function(){
         //1. call super class's ctor function
@@ -33,7 +37,8 @@ var MenuLayer = cc.Layer.extend({
 
     onPlay : function(){
         cc.log("==onplay clicked");
-        cc.director.runScene(new PlayScene());
+        ps = new PlayScene();
+        cc.director.runScene(ps);
     }
 });
 
