@@ -1,5 +1,4 @@
 
-
 var AnimationLayer = cc.Layer.extend({
 
   ctor: function(space) {
@@ -9,7 +8,7 @@ var AnimationLayer = cc.Layer.extend({
     this.kid = this.getChildByName("thekid");
     var kid = this.kid;
 
-    this.initKidAnimation();
+    this.initKidAnimation(kid);
 
     if (cc.sys.capabilities.hasOwnProperty('mouse')) {
       cc.eventManager.addListener({
@@ -18,9 +17,9 @@ var AnimationLayer = cc.Layer.extend({
         onMouseDown: function(event) {
           if (event.getButton() == cc.EventMouse.BUTTON_LEFT) {
             cc.log("mouse pressed at:" + event.getLocationX() + "," + event.getLocationY());
-            // this.onMouseMove = this.onMouseMoveClicked;
+            this.onMouseMove = this.onMouseMoveClicked;
             ACCELERATION_POINT = cc.p(event.getLocationX(), event.getLocationY());
-            // kid.runAction(this.runningAction);
+            kid.runAction(kid.runningAction);
           }
         },
 
@@ -31,6 +30,9 @@ var AnimationLayer = cc.Layer.extend({
             this.onMouseMove = function() {};
 
             ACCELERATION_POINT = null;
+
+            // turn off animation
+            
           }
         },
 
@@ -134,7 +136,7 @@ var AnimationLayer = cc.Layer.extend({
     this.addChild(newCandy);
   },
   checkBoundaries:function () {
-    
+
     var winsize = cc.director.getWinSize();
 
     if (this.kid.body.p.x < 10 || this.kid.body.p.x > winsize.width - 10 || 
@@ -145,7 +147,7 @@ var AnimationLayer = cc.Layer.extend({
     }
   },
 
-  initKidAnimation: function() {
+  initKidAnimation: function(kid) {
 
     // create sprite sheet
     cc.spriteFrameCache.addSpriteFrames(res.running_kid_plist);
@@ -159,10 +161,7 @@ var AnimationLayer = cc.Layer.extend({
     ];
 
     var animation = new cc.Animation(animFrames, 0.08);
-    this.runningAction = new cc.RepeatForever(new cc.Animate(animation));
-    this.kid.runAction(this.runningAction);
-    this.spriteSheet.addChild(this.kid);
-
+    kid.runningAction = new cc.RepeatForever(new cc.Animate(animation));
   }
 
 
