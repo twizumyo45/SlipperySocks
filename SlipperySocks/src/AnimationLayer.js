@@ -16,7 +16,7 @@ var AnimationLayer = cc.Layer.extend({
         onMouseDown: function(event) {
           if (event.getButton() == cc.EventMouse.BUTTON_LEFT) {
             cc.log("mouse pressed at:" + event.getLocationX());
-            // this.onMouseMove = this.onMouseMoveClicked;
+            this.onMouseMove = this.onMouseMoveClicked;
             ACCELERATION_POINT = cc.p(event.getLocationX(), event.getLocationY());
           }
         },
@@ -32,12 +32,9 @@ var AnimationLayer = cc.Layer.extend({
         },
 
         onMouseMoveClicked: function(event) {
-          cc.log("moved to:" + event.getLocationX());
+            ACCELERATION_POINT = cc.p(event.getLocationX(), event.getLocationY());
 
         }
-
-
-
       }, this);
     }
 
@@ -92,6 +89,9 @@ var AnimationLayer = cc.Layer.extend({
     var click_vec = cp.v(point.x, point.y);
     var accel_vec = cp.v.normalize(cp.v.sub(click_vec, kid_vec));
     this.kid.body.applyImpulse(accel_vec, cp.v(0, 0));
+
+    // angle in degrees
+    this.kid.rotation = -cp.v.toangle(accel_vec) * 57.29;
 
   },
 
