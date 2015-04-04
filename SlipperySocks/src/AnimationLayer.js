@@ -1,7 +1,4 @@
-var KID_START_X = 80;
-var KID_START_Y = 95;
 
-var ACCELERATION_POINT = cc.p(0, 0);
 
 var AnimationLayer = cc.Layer.extend({
 
@@ -62,6 +59,7 @@ var AnimationLayer = cc.Layer.extend({
     this.space.addBody(spriteCharacter.body);
     // create hitbox
     spriteCharacter.shape = new cp.BoxShape(spriteCharacter.body, contentSize.width - 14, contentSize.height);
+    spriteCharacter.shape.setCollisionType(SpriteTag.thekid);
     // add shape to space
     this.space.addShape(spriteCharacter.shape);
     // set body to the sprite
@@ -69,7 +67,12 @@ var AnimationLayer = cc.Layer.extend({
 
     spriteCharacter.setName("thekid");
 
+
+    //create first candy 
+    var spriteCandy = this.createCandy();
+
     this.addChild(spriteCharacter);
+    this.addChild(spriteCandy);
   },
 
   update: function(dt) {
@@ -85,6 +88,35 @@ var AnimationLayer = cc.Layer.extend({
 
     // this.kid.body.applyImpulse(mouselocation - kid position, this.kid.)
     this.kid.body.vx += 0.1
-  }
+  },
+
+  createCandy: function() {
+
+    //todo: randomize spawn 
+    var spriteCandy = cc.PhysicsSprite.createWithSpriteFrameName(res.candy_png);
+    var contentSize = spriteCandy.getContentSize();
+
+    // init physics body
+    spriteCandy.body = new cp.Body(1, cp.momentForBox(1, contentSize.width, contentSize.height));
+    // set position
+    spriteCandy.body.p = cc.p(KID_START_X + 80, KID_START_X + contentSize.height / 2);
+    // add body to space
+    this.space.addBody(spriteCandy.body);
+    // create hitbox
+    spriteCandy.shape = new cp.BoxShape(spriteCandy.body, contentSize.width - 14, contentSize.height);
+    spriteCandy.shape.setCollisionType(SpriteTag.candy);
+    // add shape to space
+    this.space.addShape(spriteCandy.shape);
+    // set body to the sprite
+    spriteCandy.setBody(spriteCandy.body);
+
+    spriteCandy.setName("candy");
+
+    return spriteCandy;
+  },
+  removeCandy:function () {
+    var candy = this.getChildByName("candy");
+    this.removeChild(candy);
+  },
 
 });
