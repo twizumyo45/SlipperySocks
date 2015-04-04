@@ -1,4 +1,3 @@
-
 var AnimationLayer = cc.Layer.extend({
 
   ctor: function(space) {
@@ -32,13 +31,12 @@ var AnimationLayer = cc.Layer.extend({
             ACCELERATION_POINT = null;
 
             // turn off animation
-            
+            kid.stopAllActions();
           }
         },
 
         onMouseMoveClicked: function(event) {
             ACCELERATION_POINT = cc.p(event.getLocationX(), event.getLocationY());
-
         }
       }, this);
     }
