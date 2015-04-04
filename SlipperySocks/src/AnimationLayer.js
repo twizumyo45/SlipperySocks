@@ -15,7 +15,7 @@ var AnimationLayer = cc.Layer.extend({
 
         onMouseDown: function(event) {
           if (event.getButton() == cc.EventMouse.BUTTON_LEFT) {
-            cc.log("mouse pressed at:" + event.getLocationX());
+            cc.log("mouse pressed at:" + event.getLocationX() + "," + event.getLocationY());
             // this.onMouseMove = this.onMouseMoveClicked;
             ACCELERATION_POINT = cc.p(event.getLocationX(), event.getLocationY());
           }
@@ -77,6 +77,7 @@ var AnimationLayer = cc.Layer.extend({
 
     this.addChild(spriteCharacter);
     this.addChild(spriteCandy);
+
   },
 
   update: function(dt) {
@@ -97,7 +98,7 @@ var AnimationLayer = cc.Layer.extend({
 
   createCandy: function() {
 
-    //todo: randomize spawn 
+    
     var spriteCandy = cc.PhysicsSprite.createWithSpriteFrameName(res.candy_png);
     var contentSize = spriteCandy.getContentSize();
 
@@ -129,6 +130,20 @@ var AnimationLayer = cc.Layer.extend({
     var newCandy = this.createCandy();
     this.addChild(newCandy);
   },
+  checkBoundaries:function () {
+
+    cc.log("checked");
+
+    var winsize = cc.director.getWinSize();
+
+    if (this.kid.body.p.x < 10 || this.kid.body.p.x > winsize.width - 10 || 
+            this.kid.body.p.y < 10 || this.kid.body.p.y > winsize.height - 10)
+    {
+        cc.log("atboundry");
+        this.kid.body.vx = 0;
+        this.kid.body.vy = 0;
+    }
+  }
 
 
 });
