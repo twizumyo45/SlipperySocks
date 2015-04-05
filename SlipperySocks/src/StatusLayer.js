@@ -1,7 +1,7 @@
 var StatusLayer = cc.Layer.extend({
     candies:0,
     life: MAX_LIFE,
-    lifeLoss: 1,
+    lifeLoss: 10,
 
     ctor:function () {
         this._super();
