@@ -7,7 +7,7 @@ var DAMPING_FACTOR = 0.8;
 
 var MAX_LIFE = 50000;
 
-var MONSTER_DMG = 300;
+var MONSTER_IMPULSE_DELAY = 75;
 
 if(typeof TagOfLayer == "undefined") {
     var TagOfLayer = {};
@@ -25,3 +25,12 @@ if(typeof SpriteTag == "undefined") {
     SpriteTag.monster = 3;
     SpriteTag.obstacle = 4;
 };
+
+// direction types
+if (typeof Direction == "undefined") {
+	var Direction = {};
+	Direction.north = 0;
+	Direction.east = 1;
+	Direction.south = 2;
+	Direction.west = 3;
+}

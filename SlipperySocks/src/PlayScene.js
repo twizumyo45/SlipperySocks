@@ -49,7 +49,10 @@ var PlayScene = cc.Scene.extend({
         // chipmunk step
         this.space.step(dt);
 
-        //check if out of boundries
+        //move monsters
+        this.gameLayer.getChildByTag(TagOfLayer.Animation).monsterImpulse();
+
+        //check if out of boundaries and reapply monster impulse 
         this.gameLayer.getChildByTag(TagOfLayer.Animation).checkBoundaries();
 
         //decrease life
