@@ -233,7 +233,7 @@ var AnimationLayer = cc.Layer.extend({
 
     for (var i = 0; i < this.max_obstacles; i++)
     {
-        var spriteObstacle = cc.PhysicsSprite.createWithSpriteFrameName(res.wall2_png);
+        var spriteObstacle = cc.PhysicsSprite.createWithSpriteFrameName(res.table_png);
         var contentSize = spriteObstacle.getContentSize();
 
         // init physics body

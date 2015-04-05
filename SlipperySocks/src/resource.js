@@ -2,7 +2,7 @@ var res = {
 
 	ghost_1_png: 'res/ghosts/ghost_1.png',
     ghost_plist: 'res/ghosts/ghost.plist',
-    table_jpg: 'res/table.jpg',
+    table_png: 'res/table.png',
     Koala_jpg : "res/Koala.jpg",
     bg_jpg : "res/bg.jpg",
     stationary_kid_png: 'res/stationary_kid.png',

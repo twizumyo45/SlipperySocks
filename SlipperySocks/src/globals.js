@@ -7,7 +7,7 @@ var DAMPING_FACTOR = 0.8;
 
 var MAX_LIFE = 50000;
 
-var MONSTER_DMG = 30000;
+var MONSTER_DMG = 300;
 
 if(typeof TagOfLayer == "undefined") {
     var TagOfLayer = {};

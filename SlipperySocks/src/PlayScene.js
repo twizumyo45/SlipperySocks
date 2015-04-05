@@ -42,14 +42,8 @@ var PlayScene = cc.Scene.extend({
     },
     collisionMonster:function (arbiter, space) {
     	cc.log("==monster collide");
-        //cc.director.pause();
-        //this.addChild(new GameOverLayer());
-
-        for (var i = 0; i < MONSTER_DMG; i++)
-        {
-        	this.gameLayer.getChildByTag(TagOfLayer.Status).decrementLife();
-    	}
-
+        cc.director.pause();
+        this.addChild(new GameOverLayer());
     },
     update:function (dt) {
         // chipmunk step
