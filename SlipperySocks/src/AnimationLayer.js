@@ -1,7 +1,7 @@
 var AnimationLayer = cc.Layer.extend({
 
-  max_monsters: 5,
-  max_obstacles: 5,
+  max_monsters: 1,
+  max_obstacles: 3,
   monsters:[],
   obstacles:[],
   monsterImpulseTimer: 0,
@@ -254,6 +254,8 @@ var AnimationLayer = cc.Layer.extend({
 
         spriteMonster.setName("monster" + i);
         
+        spriteMonster.rotation = -cp.v.toangle(vec) * 57.29;
+
         this.monsters.push(spriteMonster);
         this.addChild(spriteMonster);
 
