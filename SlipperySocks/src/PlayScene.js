@@ -46,7 +46,15 @@ var PlayScene = cc.Scene.extend({
         this.gameLayer.getChildByTag(TagOfLayer.Animation).checkBoundaries();
 
         //decrease life
-        this.gameLayer.getChildByTag(TagOfLayer.Status).decrementLife();
+        var life = this.gameLayer.getChildByTag(TagOfLayer.Status).decrementLife();
+
+        //game over logic
+        if (life <= 0)
+        {
+        	cc.log("==game over");
+        	cc.director.pause();
+        	this.addChild(new GameOverLayer());
+        }
 
         //deal with candy collision
         if (this.gotCandy == true)

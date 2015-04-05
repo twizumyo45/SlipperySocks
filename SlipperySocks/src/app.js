@@ -1,6 +1,3 @@
-//TODO: delete this later
-var ps;
-
 
 var MenuLayer = cc.Layer.extend({
     ctor : function(){
@@ -37,8 +34,8 @@ var MenuLayer = cc.Layer.extend({
 
     onPlay : function(){
         cc.log("==onplay clicked");
-        ps = new PlayScene();
-        cc.director.runScene(ps);
+        
+        cc.director.runScene(new PlayScene());
     }
 });
 
