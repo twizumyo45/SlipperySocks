@@ -36,13 +36,13 @@
             <key>format</key>
             <integer>2</integer>
             <key>realTextureFileName</key>
-            <string>/Users/Noah/Desktop/lahacks/SlipperySocks/SlipperySocks/res/ghosts/ghost.png/ghost.png</string>
+            <string>ghost.png</string>
             <key>size</key>
             <string>{70,32}</string>
             <key>smartupdate</key>
             <string>$TexturePacker:SmartUpdate:fe7bac02e804143263044447b5fce64e:d23fdc11b3e864496a589e8edb6a1d79:8538abdcbd4db339f06a581573008863$</string>
             <key>textureFileName</key>
-            <string>/Users/Noah/Desktop/lahacks/SlipperySocks/SlipperySocks/res/ghosts/ghost.png/ghost.png</string>
+            <string>ghost.png</string>
         </dict>
     </dict>
 </plist>
