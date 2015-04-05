@@ -29,12 +29,12 @@ var StatusLayer = cc.Layer.extend({
         this.candies += 1;
         this.life = MAX_LIFE;
         this.labelCandies.setString("Candies:" + this.candies);
-        this.labelLife.setString("Life:" + Math.floor(this.life/10));
+        this.labelLife.setString("Life:" + Math.floor(this.life/100));
     },
 
     decrementLife:function(){
         this.life -= this.lifeLoss;
-        this.labelLife.setString("Life:" + Math.floor(this.life/10));
+        this.labelLife.setString("Life:" + Math.floor(this.life/100));
 
         return this.life;
     }
