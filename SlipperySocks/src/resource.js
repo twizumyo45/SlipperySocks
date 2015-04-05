@@ -9,7 +9,8 @@ var res = {
     wall_png: 'res/wall.png',
     wall2_png: 'res/wall2.png',
     ghost_png: 'res/ghosts/ghost.png',
-    ghost_plist: 'res/ghosts/ghost.plist'
+    ghost_plist: 'res/ghosts/ghost.plist',
+    table_jpg: 'res/table.jpg'
 };
 
 var g_resources = [];
