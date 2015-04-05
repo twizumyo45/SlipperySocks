@@ -1,8 +1,8 @@
 var AnimationLayer = cc.Layer.extend({
 
   max_monsters: 1,
-  max_obstacles: 3,
-  cur_obstacles: 12,
+  max_obstacles: 12,
+  cur_obstacles: 3,
   monsters:[],
   monsterImpulseTimer: 0,
 
