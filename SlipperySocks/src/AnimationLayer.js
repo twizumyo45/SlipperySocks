@@ -2,8 +2,8 @@ var AnimationLayer = cc.Layer.extend({
 
   max_monsters: 1,
   max_obstacles: 3,
+  cur_obstacles: 12,
   monsters:[],
-  obstacles:[],
   monsterImpulseTimer: 0,
 
   ctor: function(space) {
@@ -17,8 +17,8 @@ var AnimationLayer = cc.Layer.extend({
 
     //init monsters
     this.createMonsters();
-    //init obstacles 
-    this.createObstacles();
+    //init obstacle
+    this.createObstacle();
     this.initKidAnimation(kid);
 
 
@@ -184,17 +184,10 @@ var AnimationLayer = cc.Layer.extend({
     //create new set of monsters
     this.createMonsters();
 
-    //rmv all old obstacles when a candy is gotten
-    for (var i = 0; i < this.max_obstacles; i++)
-    {
-        var obstacle = this.getChildByName("obstacle" + i);
-        this.space.removeShape(obstacle.shape);
-        obstacle.removeFromParent();
+    // add an obstacle
+    if (this.cur_obstacles < this.max_obstacles) {
+    this.createObstacle();
     }
-    //increment max obstacles (to increase difficulty)
-    this.max_obstacles += 1;
-    //create new set of obstacles 
-    this.createObstacles();
   },
   createMonsters:function () {
     for (var i = 0; i < this.max_monsters; i++)
@@ -263,37 +256,33 @@ var AnimationLayer = cc.Layer.extend({
 
         spriteMonster.body.applyImpulse(spriteMonster.dirVect, cp.v(0, 0));
     }
-    
-  },
-  createObstacles:function () {
+},
+  createObstacle:function () {
 
-    for (var i = 0; i < this.max_obstacles; i++)
-    {
-        var spriteObstacle = cc.PhysicsSprite.createWithSpriteFrameName(res.table_png);
-        var contentSize = spriteObstacle.getContentSize();
+    var spriteObstacle = cc.PhysicsSprite.createWithSpriteFrameName(res.table_png);
+    var contentSize = spriteObstacle.getContentSize();
 
-        // init physics body
-        spriteObstacle.body = new cp.Body(1, cp.momentForBox(1, contentSize.width, contentSize.height));
-        // set position (randomized)
-        var winsize = cc.director.getWinSize();
-        var xPos = Math.floor((Math.random() * winsize.width));
-        var yPos = Math.floor((Math.random() * winsize.height));
-        spriteObstacle.body.p = cc.p(xPos, yPos);
-        // add body to spacespriteObstacle
-        this.space.addBody(spriteObstacle.body);
-        // create hitbox
-        spriteObstacle.shape = new cp.BoxShape(spriteObstacle.body, contentSize.width - 14, contentSize.height);
-        spriteObstacle.shape.setCollisionType(SpriteTag.obstacle);
-        // add shape to space
-        this.space.addShape(spriteObstacle.shape);
-        // set body to the sprite
-        spriteObstacle.setBody(spriteObstacle.body);
+    // init physics body
+    spriteObstacle.body = new cp.Body(1, cp.momentForBox(1, contentSize.width, contentSize.height));
+    // set position (randomized)
+    var winsize = cc.director.getWinSize();
+    var xPos = Math.floor((Math.random() * winsize.width));
+    var yPos = Math.floor((Math.random() * winsize.height));
+    spriteObstacle.body.p = cc.p(xPos, yPos);
+    // add body to spacespriteObstacle
+    this.space.addBody(spriteObstacle.body);
+    // create hitbox
+    spriteObstacle.shape = new cp.BoxShape(spriteObstacle.body, contentSize.width - 14, contentSize.height);
+    spriteObstacle.shape.setCollisionType(SpriteTag.obstacle);
+    // add shape to space
+    this.space.addShape(spriteObstacle.shape);
+    // set body to the sprite
+    spriteObstacle.setBody(spriteObstacle.body);
 
-        spriteObstacle.setName("obstacle" + i);
-        this.obstacles.push(spriteObstacle);
-        this.addChild(spriteObstacle);
-    }
-    
+    spriteObstacle.setName("obstacle" + i);
+    this.addChild(spriteObstacle);
+
+    this.cur_obstacles += 1;
   },
   checkBoundaries:function () {
 
