@@ -4,6 +4,7 @@ var PlayScene = cc.Scene.extend({
 	gameLayer:null,
 
     onEnter:function () {
+    	cc.director.resume();
         this._super();
         this.initPhysics();
 /*
@@ -49,10 +50,11 @@ var PlayScene = cc.Scene.extend({
         var life = this.gameLayer.getChildByTag(TagOfLayer.Status).decrementLife();
 
         //game over logic
-        if (life <= 0)
+        if (life == 0)
         {
         	cc.log("==game over");
         	cc.director.pause();
+        	//cc.director.resume();
         	this.addChild(new GameOverLayer());
         }
 
