@@ -297,6 +297,7 @@ var AnimationLayer = cc.Layer.extend({
 
     var animation = new cc.Animation(animFrames, 0.2);
     ghost.runningAction = new cc.RepeatForever(new cc.Animate(animation));
+    ghost.runAction(ghost.runningAction);
   }
 
 
