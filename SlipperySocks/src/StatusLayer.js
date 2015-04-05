@@ -25,7 +25,9 @@ var StatusLayer = cc.Layer.extend({
     },
 
     incrementCandies:function(){
-        this.lifeLoss += 5;
+        if (this.lifeLoss < MAX_LIFE_LOSS_RATE)
+            this.lifeLoss += 5;
+        
         this.candies += 1;
         this.life = MAX_LIFE;
         this.labelCandies.setString("Candies:" + this.candies);

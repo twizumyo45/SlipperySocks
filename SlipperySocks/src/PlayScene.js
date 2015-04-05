@@ -42,6 +42,7 @@ var PlayScene = cc.Scene.extend({
     },
     collisionMonster:function (arbiter, space) {
     	cc.log("==monster collide");
+    	this.gameLayer.getChildByTag(TagOfLayer.Animation).clearMonsters();
         cc.director.pause();
         this.addChild(new GameOverLayer());
     },
@@ -63,6 +64,7 @@ var PlayScene = cc.Scene.extend({
         {
         	cc.log("==game over");
         	cc.director.pause();
+        	this.gameLayer.getChildByTag(TagOfLayer.Animation).checkBoundaries();
         	this.addChild(new GameOverLayer());
         }
 

@@ -1,7 +1,7 @@
 var AnimationLayer = cc.Layer.extend({
 
   max_monsters: 1,
-  max_obstacles: 12,
+  max_obstacles: 10,
   cur_obstacles: 0,
   monsters:[],
   monsterImpulseTimer: 0,
@@ -173,18 +173,18 @@ var AnimationLayer = cc.Layer.extend({
     this.addChild(newCandy);
 
     if (this.cur_monster_array - 5 > 0) {
-
         //rmv all old monsters when a candy is gotten
         for (var i = 0; i < this.monsters[this.cur_monster_array - 5].length; i++)
         {
-            var monster = this.getChildByName("monster" + this.cur_monster_array + i);
+            var monster = this.getChildByName("monster" + (this.cur_monster_array-5) +"-"+ i);
             this.space.removeShape(monster.shape);
             monster.removeFromParent();
         }
     }
 
     //increment max monsters (to increase difficulty)
-    this.max_monsters += 1;
+    if (this.max_monsters < MAX_TOTAL_MONSTERS)
+        this.max_monsters += 1;
     //create new set of monsters
     this.monsters.push(this.createMonsters(this.max_monsters));
 
@@ -244,14 +244,14 @@ var AnimationLayer = cc.Layer.extend({
         // add body to space
         this.space.addBody(spriteMonster.body);
         // create hitbox
-        spriteMonster.shape = new cp.BoxShape(spriteMonster.body, contentSize.width - 14, contentSize.height);
+        spriteMonster.shape = new cp.BoxShape(spriteMonster.body, contentSize.width - 14, contentSize.height-14);
         spriteMonster.shape.setCollisionType(SpriteTag.monster);
         // add shape to space
         this.space.addShape(spriteMonster.shape);
         // set body to the sprite
         spriteMonster.setBody(spriteMonster.body);
 
-        spriteMonster.setName("monster" + this.cur_monster_array + i);
+        spriteMonster.setName("monster" + this.cur_monster_array +"-" +i);
         
         spriteMonster.rotation = -cp.v.toangle(vec) * 57.29;
 
@@ -356,6 +356,11 @@ var AnimationLayer = cc.Layer.extend({
     var animation = new cc.Animation(animFrames, 0.2);
     ghost.runningAction = new cc.RepeatForever(new cc.Animate(animation));
     ghost.runAction(ghost.runningAction);
+  },
+  clearMonsters: function(ghost) {
+
+    this.monsters = [];
+    this.cur_monster_array = -1;
   }
 
 
