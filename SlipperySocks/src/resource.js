@@ -8,8 +8,11 @@ var res = {
     running_kid_plist: 'res/texturePacker/running_kid.plist',
     wall_png: 'res/wall.png',
     wall2_png: 'res/wall2.png',
+
     ghost_png: 'res/ghosts/ghost_1.png',
-    ghost_plist: 'res/ghosts/ghost.plist'
+    ghost_plist: 'res/ghosts/ghost.plist',
+    table_jpg: 'res/table.jpg'
+
 };
 
 var g_resources = [];
