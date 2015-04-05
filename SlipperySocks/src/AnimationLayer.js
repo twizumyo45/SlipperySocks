@@ -269,10 +269,7 @@ var AnimationLayer = cc.Layer.extend({
 
   initKidAnimation: function(kid) {
 
-    // create sprite sheet
     cc.spriteFrameCache.addSpriteFrames(res.running_kid_plist);
-    this.spriteSheet = new cc.SpriteBatchNode(res.running_kid_png);
-    this.addChild(this.spriteSheet);
 
     // init runningAction
     var animFrames = [
@@ -282,6 +279,20 @@ var AnimationLayer = cc.Layer.extend({
 
     var animation = new cc.Animation(animFrames, 0.08);
     kid.runningAction = new cc.RepeatForever(new cc.Animate(animation));
+  },
+
+  initGhostAnimation: function(ghost) {
+
+    cc.spriteFrameCache.addSpriteFrames(res.ghost_plist);
+
+    // init runningAction
+    var animFrames = [
+        cc.spriteFrameCache.getSpriteFrame('ghost_1.png'),
+        cc.spriteFrameCache.getSpriteFrame('ghost_2.png')
+    ];
+
+    var animation = new cc.Animation(animFrames, 0.2);
+    ghost.runningAction = new cc.RepeatForever(new cc.Animate(animation));
   }
 
 
