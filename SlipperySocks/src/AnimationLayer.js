@@ -4,6 +4,7 @@ var AnimationLayer = cc.Layer.extend({
   max_obstacles: 5,
   monsters:[],
   obstacles:[],
+  monsterImpulseTimer: 0,
 
   ctor: function(space) {
     this._super();
@@ -144,8 +145,8 @@ var AnimationLayer = cc.Layer.extend({
     spriteCandy.body = new cp.Body(1, cp.momentForBox(1, contentSize.width, contentSize.height));
     // set position (randomized)
     var winsize = cc.director.getWinSize();
-    var xPos = Math.floor((Math.random() * winsize.width));
-    var yPos = Math.floor((Math.random() * winsize.height));
+    var xPos = Math.floor((Math.random() * (winsize.width - 20))) + 20;
+    var yPos = Math.floor((Math.random() * (winsize.height- 20))) + 20;
     spriteCandy.body.p = cc.p(xPos, yPos);
     // add body to space
     this.space.addBody(spriteCandy.body);
@@ -177,6 +178,7 @@ var AnimationLayer = cc.Layer.extend({
         this.space.removeShape(monster.shape);
         monster.removeFromParent();
     }
+    this.monsters = [];
     //increment max monsters (to increase difficulty)
     this.max_monsters += 1;
     //create new set of monsters
@@ -191,23 +193,54 @@ var AnimationLayer = cc.Layer.extend({
     }
     //increment max obstacles (to increase difficulty)
     this.max_obstacles += 1;
-    //create new set of obstacles
-    //todo: put back 
-    //this.createObstacles();
+    //create new set of obstacles 
+    this.createObstacles();
   },
   createMonsters:function () {
-
     for (var i = 0; i < this.max_monsters; i++)
     {
-        var spriteMonster = cc.PhysicsSprite.createWithSpriteFrameName(res.ghost_png);
+
+        var winsize = cc.director.getWinSize();
+        //random dir stuff 
+        var dir = Math.floor((Math.random() * 4));
+        var impulseMagnitude = Math.floor((Math.random() * 50)) + 30;
+        var xPos; 
+        var yPos;
+        var vec;
+        if (dir == Direction.north)
+        {
+            vec = cp.v(0, impulseMagnitude);
+            xPos = Math.floor((Math.random() * winsize.width));
+            yPos = -20;
+        }
+        else if (dir == Direction.east)
+        {
+            vec = cp.v(impulseMagnitude, 0);
+            xPos = -20;
+            yPos = Math.floor((Math.random() * winsize.height));
+        }
+        else if (dir == Direction.south)
+        {
+            vec = cp.v(0, -1 * impulseMagnitude);
+            xPos = Math.floor((Math.random() * winsize.width));
+            yPos = winsize.height + 20;
+        }
+        else //west
+        {
+            vec = cp.v(-1 * impulseMagnitude, 0);
+            xPos = winsize.width + 20;
+            yPos = Math.floor((Math.random() * winsize.height));
+        }
+
+        var spriteMonster = cc.PhysicsSprite.createWithSpriteFrameName(res.ghost_1_png);
+
+        spriteMonster.dirVect = vec; 
+
         var contentSize = spriteMonster.getContentSize();
 
         // init physics body
         spriteMonster.body = new cp.Body(1, cp.momentForBox(1, contentSize.width, contentSize.height));
-        // set position (randomized)
-        var winsize = cc.director.getWinSize();
-        var xPos = Math.floor((Math.random() * winsize.width));
-        var yPos = Math.floor((Math.random() * winsize.height));
+        //var yPos = Math.floor((Math.random() * winsize.height));
         spriteMonster.body.p = cc.p(xPos, yPos);
         // add body to space
         this.space.addBody(spriteMonster.body);
@@ -220,9 +253,13 @@ var AnimationLayer = cc.Layer.extend({
         spriteMonster.setBody(spriteMonster.body);
 
         spriteMonster.setName("monster" + i);
-        this.initGhostAnimation(spriteMonster);
+        
         this.monsters.push(spriteMonster);
         this.addChild(spriteMonster);
+
+        this.initGhostAnimation(spriteMonster);
+
+        spriteMonster.body.applyImpulse(spriteMonster.dirVect, cp.v(0, 0));
     }
     
   },
@@ -230,7 +267,7 @@ var AnimationLayer = cc.Layer.extend({
 
     for (var i = 0; i < this.max_obstacles; i++)
     {
-        var spriteObstacle = cc.PhysicsSprite.createWithSpriteFrameName(res.wall2_png);
+        var spriteObstacle = cc.PhysicsSprite.createWithSpriteFrameName(res.table_png);
         var contentSize = spriteObstacle.getContentSize();
 
         // init physics body
@@ -265,6 +302,16 @@ var AnimationLayer = cc.Layer.extend({
     {
         this.kid.body.vx = 0;
         this.kid.body.vy = 0;
+    }
+  },
+  monsterImpulse:function () {
+    this.monsterImpulseTimer += 1;
+    for (var i = 0; i < this.max_monsters; i++)
+    {
+        if (this.monsterImpulseTimer % MONSTER_IMPULSE_DELAY == 1)
+        {
+            this.monsters[i].body.applyImpulse(this.monsters[i].dirVect, cp.v(0, 0));
+        }
     }
   },
 
