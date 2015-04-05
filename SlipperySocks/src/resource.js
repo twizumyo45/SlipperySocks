@@ -1,4 +1,8 @@
 var res = {
+
+	ghost_1_png: 'res/ghosts/ghost_1.png',
+    ghost_plist: 'res/ghosts/ghost.plist',
+    table_jpg: 'res/table.jpg',
     Koala_jpg : "res/Koala.jpg",
     bg_jpg : "res/bg.jpg",
     stationary_kid_png: 'res/stationary_kid.png',
@@ -7,12 +11,7 @@ var res = {
     running_kid_png: 'res/texturePacker/running_kid.png',
     running_kid_plist: 'res/texturePacker/running_kid.plist',
     wall_png: 'res/wall.png',
-    wall2_png: 'res/wall2.png',
-
-    ghost_png: 'res/ghosts/ghost_1.png',
-    ghost_plist: 'res/ghosts/ghost.plist',
-    table_jpg: 'res/table.jpg'
-
+    //wall2_png: 'res/wall2.png'
 };
 
 var g_resources = [];
