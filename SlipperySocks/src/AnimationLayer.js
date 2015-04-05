@@ -1,10 +1,11 @@
 var AnimationLayer = cc.Layer.extend({
 
   max_monsters: 1,
-  max_obstacles: 3,
-  cur_obstacles: 12,
+  max_obstacles: 12,
+  cur_obstacles: 0,
   monsters:[],
   monsterImpulseTimer: 0,
+  cur_monster_array: -1,
 
   ctor: function(space) {
     this._super();
@@ -14,9 +15,8 @@ var AnimationLayer = cc.Layer.extend({
     this.kid = this.getChildByName("thekid");
     var kid = this.kid;
 
-
     //init monsters
-    this.createMonsters();
+    this.monsters.push(this.createMonsters(1));
     //init obstacle
     this.createObstacle();
     this.initKidAnimation(kid);
@@ -172,26 +172,31 @@ var AnimationLayer = cc.Layer.extend({
     this.candy = newCandy;
     this.addChild(newCandy);
 
-    //rmv all old monsters when a candy is gotten
-    for (var i = 0; i < this.max_monsters; i++)
-    {
-        var monster = this.getChildByName("monster" + i);
-        this.space.removeShape(monster.shape);
-        monster.removeFromParent();
+    if (this.cur_monster_array - 5 > 0) {
+
+        //rmv all old monsters when a candy is gotten
+        for (var i = 0; i < this.monsters[this.cur_monster_array - 5].length; i++)
+        {
+            var monster = this.getChildByName("monster" + this.cur_monster_array + i);
+            this.space.removeShape(monster.shape);
+            monster.removeFromParent();
+        }
     }
-    this.monsters = [];
+
     //increment max monsters (to increase difficulty)
     this.max_monsters += 1;
     //create new set of monsters
-    this.createMonsters();
+    this.monsters.push(this.createMonsters(this.max_monsters));
 
     // add an obstacle
     if (this.cur_obstacles < this.max_obstacles) {
     this.createObstacle();
     }
   },
-  createMonsters:function () {
-    for (var i = 0; i < this.max_monsters; i++)
+  createMonsters:function (num) {
+    this.cur_monster_array += 1;
+    monsters = [];
+    for (var i = 0; i < num; i++)
     {
 
         var winsize = cc.director.getWinSize();
@@ -246,17 +251,18 @@ var AnimationLayer = cc.Layer.extend({
         // set body to the sprite
         spriteMonster.setBody(spriteMonster.body);
 
-        spriteMonster.setName("monster" + i);
+        spriteMonster.setName("monster" + this.cur_monster_array + i);
         
         spriteMonster.rotation = -cp.v.toangle(vec) * 57.29;
 
-        this.monsters.push(spriteMonster);
+        monsters.push(spriteMonster);
         this.addChild(spriteMonster);
 
         this.initGhostAnimation(spriteMonster);
 
         spriteMonster.body.applyImpulse(spriteMonster.dirVect, cp.v(0, 0));
     }
+    return monsters;
 },
   createObstacle:function () {
 
@@ -307,13 +313,20 @@ var AnimationLayer = cc.Layer.extend({
   },
   monsterImpulse:function () {
     this.monsterImpulseTimer += 1;
-    for (var i = 0; i < this.max_monsters; i++)
+    for (var i = 0; i < this.monsters.length; i++)
     {
-        if (this.monsterImpulseTimer % MONSTER_IMPULSE_DELAY == 1)
-        {
-            this.monsters[i].body.applyImpulse(this.monsters[i].dirVect, cp.v(0, 0));
+        console.log(this.monsters);
+        console.log(i);
+        console.log(this.cur_monster_array);
+        for (var j = 0; j < this.monsters[i].length; j++) {
+
+            if (this.monsterImpulseTimer % MONSTER_IMPULSE_DELAY == 1)
+            {
+                this.monsters[i][j].body.applyImpulse(this.monsters[i][j].dirVect, cp.v(0, 0));
+            }
         }
     }
+
   },
 
   initKidAnimation: function(kid) {
