@@ -145,8 +145,8 @@ var AnimationLayer = cc.Layer.extend({
     spriteCandy.body = new cp.Body(1, cp.momentForBox(1, contentSize.width, contentSize.height));
     // set position (randomized)
     var winsize = cc.director.getWinSize();
-    var xPos = Math.floor((Math.random() * (winsize.width - 20))) + 20;
-    var yPos = Math.floor((Math.random() * (winsize.height- 20))) + 20;
+    var xPos = Math.floor((Math.random() * (winsize.width - 40))) + 40;
+    var yPos = Math.floor((Math.random() * (winsize.height- 40))) + 40;
     spriteCandy.body.p = cc.p(xPos, yPos);
     // add body to space
     this.space.addBody(spriteCandy.body);
