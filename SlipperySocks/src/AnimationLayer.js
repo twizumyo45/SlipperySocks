@@ -199,7 +199,7 @@ var AnimationLayer = cc.Layer.extend({
 
     for (var i = 0; i < this.max_monsters; i++)
     {
-        var spriteMonster = cc.PhysicsSprite.createWithSpriteFrameName(res.ghost1_png);
+        var spriteMonster = cc.PhysicsSprite.createWithSpriteFrameName(res.ghost_png);
         var contentSize = spriteMonster.getContentSize();
 
         // init physics body
