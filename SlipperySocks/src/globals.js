@@ -5,7 +5,9 @@ var ACCELERATION_POINT = null;
 var ACCELERATION_FACTOR = 2;
 var DAMPING_FACTOR = 0.8;
 
-var MAX_LIFE = 10000;
+var MAX_LIFE = 50000;
+
+var MONSTER_DMG = 30000;
 
 if(typeof TagOfLayer == "undefined") {
     var TagOfLayer = {};
@@ -20,4 +22,6 @@ if(typeof SpriteTag == "undefined") {
     SpriteTag.thekid = 0;
     SpriteTag.candy = 1;
     SpriteTag.wall = 2;
+    SpriteTag.monster = 3;
+    SpriteTag.obstacle = 4;
 };

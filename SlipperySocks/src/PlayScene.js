@@ -33,11 +33,23 @@ var PlayScene = cc.Scene.extend({
         // set damping
         this.space.damping = DAMPING_FACTOR;
 
-        //add collision handler for kid to candy/wall
+        //add collision handler for kid to candy/wall/monster
         this.space.addCollisionHandler(SpriteTag.thekid, SpriteTag.candy, this.collisionCandy.bind(this), null, null, null);
+        this.space.addCollisionHandler(SpriteTag.thekid, SpriteTag.monster, this.collisionMonster.bind(this), null, null, null);
     },
     collisionCandy:function (arbiter, space) {
         this.gotCandy = true;
+    },
+    collisionMonster:function (arbiter, space) {
+    	cc.log("==monster collide");
+        //cc.director.pause();
+        //this.addChild(new GameOverLayer());
+
+        for (var i = 0; i < MONSTER_DMG; i++)
+        {
+        	this.gameLayer.getChildByTag(TagOfLayer.Status).decrementLife();
+    	}
+
     },
     update:function (dt) {
         // chipmunk step
