@@ -7,26 +7,26 @@
             <key>ghost_1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,2},{28,32}}</string>
+                <string>{{2,2},{32,28}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{2,0},{28,32}}</string>
+                <string>{{0,2},{32,28}}</string>
                 <key>sourceSize</key>
                 <string>{32,32}</string>
             </dict>
             <key>ghost_2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,36},{28,30}}</string>
+                <string>{{36,2},{30,28}}</string>
                 <key>offset</key>
-                <string>{0,-1}</string>
+                <string>{-1,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{2,2},{28,30}}</string>
+                <string>{{0,2},{30,28}}</string>
                 <key>sourceSize</key>
                 <string>{32,32}</string>
             </dict>
@@ -36,13 +36,13 @@
             <key>format</key>
             <integer>2</integer>
             <key>realTextureFileName</key>
-            <string>ghost.png</string>
+            <string>/Users/Noah/Desktop/lahacks/SlipperySocks/SlipperySocks/res/ghosts/ghost.png/ghost.png</string>
             <key>size</key>
-            <string>{32,71}</string>
+            <string>{70,32}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:7060ef0ad05c1a672569131793e0677e:b1a53d356139d0688a49a8129042daa2:8538abdcbd4db339f06a581573008863$</string>
+            <string>$TexturePacker:SmartUpdate:fe7bac02e804143263044447b5fce64e:d23fdc11b3e864496a589e8edb6a1d79:8538abdcbd4db339f06a581573008863$</string>
             <key>textureFileName</key>
-            <string>ghost.png</string>
+            <string>/Users/Noah/Desktop/lahacks/SlipperySocks/SlipperySocks/res/ghosts/ghost.png/ghost.png</string>
         </dict>
     </dict>
 </plist>
