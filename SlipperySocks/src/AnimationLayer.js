@@ -109,7 +109,7 @@ var AnimationLayer = cc.Layer.extend({
 
     //create first candy 
     var spriteCandy = this.createCandy();
-
+    this.candy = spriteCandy; 
 
     this.addChild(spriteCharacter);
     this.addChild(spriteCandy);
@@ -169,6 +169,7 @@ var AnimationLayer = cc.Layer.extend({
     candy.removeFromParent();
 
     var newCandy = this.createCandy();
+    this.candy = newCandy;
     this.addChild(newCandy);
 
     //rmv all old monsters when a candy is gotten
@@ -211,24 +212,24 @@ var AnimationLayer = cc.Layer.extend({
         {
             vec = cp.v(0, impulseMagnitude);
             xPos = Math.floor((Math.random() * winsize.width));
-            yPos = -20;
+            yPos = -50;
         }
         else if (dir == Direction.east)
         {
             vec = cp.v(impulseMagnitude, 0);
-            xPos = -20;
+            xPos = -50;
             yPos = Math.floor((Math.random() * winsize.height));
         }
         else if (dir == Direction.south)
         {
             vec = cp.v(0, -1 * impulseMagnitude);
             xPos = Math.floor((Math.random() * winsize.width));
-            yPos = winsize.height + 20;
+            yPos = winsize.height + 50;
         }
         else //west
         {
             vec = cp.v(-1 * impulseMagnitude, 0);
-            xPos = winsize.width + 20;
+            xPos = winsize.width + 50;
             yPos = Math.floor((Math.random() * winsize.height));
         }
 
@@ -304,6 +305,15 @@ var AnimationLayer = cc.Layer.extend({
     {
         this.kid.body.vx = 0;
         this.kid.body.vy = 0;
+    }
+
+    if (this.candy.body.p.x < 10 || this.candy.body.p.x > winsize.width - 10 || 
+            this.candy.body.p.y < 10 || this.candy.body.p.y > winsize.height - 10)
+    {
+        this.space.removeShape(this.candy.shape);
+        this.candy.removeFromParent();
+        this.candy = this.createCandy();
+        this.addChild(this.candy);
     }
   },
   monsterImpulse:function () {
