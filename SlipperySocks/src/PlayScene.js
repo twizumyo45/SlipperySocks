@@ -42,7 +42,7 @@ var PlayScene = cc.Scene.extend({
     },
     collisionMonster:function (arbiter, space) {
     	cc.log("==monster collide");
-    	this.gameLayer.getChildByTag(TagOfLayer.Animation).clearMonsters();
+    	this.gameLayer.getChildByTag(TagOfLayer.Animation).clear();
         cc.director.pause();
         this.addChild(new GameOverLayer());
     },

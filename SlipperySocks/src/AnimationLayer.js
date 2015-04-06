@@ -94,7 +94,7 @@ var AnimationLayer = cc.Layer.extend({
     // init physics body
     spriteCharacter.body = new cp.Body(1, cp.momentForBox(1, contentSize.width, contentSize.height));
     // set position
-    spriteCharacter.body.p = cc.p(KID_START_X, KID_START_X + contentSize.height / 2);
+    spriteCharacter.body.p = cc.p(KID_START_X, KID_START_Y);
     // add body to space
     this.space.addBody(spriteCharacter.body);
     // create hitbox
@@ -145,8 +145,8 @@ var AnimationLayer = cc.Layer.extend({
     spriteCandy.body = new cp.Body(1, cp.momentForBox(1, contentSize.width, contentSize.height));
     // set position (randomized)
     var winsize = cc.director.getWinSize();
-    var xPos = Math.floor((Math.random() * (winsize.width - 40))) + 40;
-    var yPos = Math.floor((Math.random() * (winsize.height- 40))) + 40;
+    var xPos = Math.floor((Math.random() * (winsize.width - 80))) + 80;
+    var yPos = Math.floor((Math.random() * (winsize.height- 80))) + 80;
     spriteCandy.body.p = cc.p(xPos, yPos);
     // add body to space
     this.space.addBody(spriteCandy.body);
@@ -188,9 +188,9 @@ var AnimationLayer = cc.Layer.extend({
     //create new set of monsters
     this.monsters.push(this.createMonsters(this.max_monsters));
 
-    // add an obstacle
-    if (this.cur_obstacles < this.max_obstacles) {
-    this.createObstacle();
+    // add an obstacle if not too many/ later just make them every five rounds
+    if (this.cur_obstacles < this.max_obstacles || this.cur_monster_array%3 == 0) {
+        this.createObstacle();
     }
   },
   createMonsters:function (num) {
@@ -210,24 +210,24 @@ var AnimationLayer = cc.Layer.extend({
         {
             vec = cp.v(0, impulseMagnitude);
             xPos = Math.floor((Math.random() * winsize.width));
-            yPos = -50;
+            yPos = -80;
         }
         else if (dir == Direction.east)
         {
             vec = cp.v(impulseMagnitude, 0);
-            xPos = -50;
+            xPos = -80;
             yPos = Math.floor((Math.random() * winsize.height));
         }
         else if (dir == Direction.south)
         {
             vec = cp.v(0, -1 * impulseMagnitude);
             xPos = Math.floor((Math.random() * winsize.width));
-            yPos = winsize.height + 50;
+            yPos = winsize.height + 80;
         }
         else //west
         {
             vec = cp.v(-1 * impulseMagnitude, 0);
-            xPos = winsize.width + 50;
+            xPos = winsize.width + 80;
             yPos = Math.floor((Math.random() * winsize.height));
         }
 
@@ -357,7 +357,7 @@ var AnimationLayer = cc.Layer.extend({
     ghost.runningAction = new cc.RepeatForever(new cc.Animate(animation));
     ghost.runAction(ghost.runningAction);
   },
-  clearMonsters: function(ghost) {
+  clear: function(ghost) {
 
     this.monsters = [];
     this.cur_monster_array = -1;
